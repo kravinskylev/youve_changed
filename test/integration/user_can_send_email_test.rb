@@ -29,7 +29,11 @@ class UserCanSendEmailTest < ActionDispatch::IntegrationTest
     assert page.has_content? "Horace"
     assert page.has_css? "form#email-form"
 
+    assert ActionMailer::Base.deliveries.empty?
+
     fill_in "email", with: "brett@happybday.com"
     click_on "Submit"
+
+    assert_equal 1, ActionMailer::Base.deliveries.count
   end
 end
