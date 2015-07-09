@@ -34,6 +34,9 @@ class UserCanSendEmailTest < ActionDispatch::IntegrationTest
     fill_in "email", with: "brett@happybday.com"
     click_on "Submit"
 
+    mail = ActionMailer::Base.deliveries.last
+
     assert_equal 1, ActionMailer::Base.deliveries.count
+    assert_equal "", mail.body.raw_source
   end
 end
