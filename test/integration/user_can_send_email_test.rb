@@ -5,6 +5,7 @@ class UserCanSendEmailTest < ActionDispatch::IntegrationTest
 
   def setup
     Capybara.app = YouveChanged::Application
+    reset_session!
   end
 
   def test_loads_homepage
@@ -26,7 +27,9 @@ class UserCanSendEmailTest < ActionDispatch::IntegrationTest
 
     assert_equal '/', current_path
     assert page.has_content? "Horace"
-
     assert page.has_css? "form#email-form"
+
+    fill_in "email", with: "brett@happybday.com"
+    click_on "Submit"
   end
 end
